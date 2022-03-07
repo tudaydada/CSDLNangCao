@@ -230,3 +230,46 @@ AS
 	END
 
 execute khachHangVIP
+
+
+-- proc thêm mới khách hàng
+alter proc insertCustomer (@MaKH CHAR(10),
+								@TenKH NVARCHAR(150),
+								@Email NVARCHAR(100),
+								@SoDT varchar(12),
+								@DiaChi NVARCHAR(100))
+as
+	begin
+		if @MaKH is not null
+			if @MaKH not in (select MaKH from CUSTOMER)
+					insert into CUSTOMER values (@MaKH, @TenKH, @Email, @SoDT, @DiaChi)
+	end
+--thêm mới sản phẩm
+create proc insertProduct (@MaSP CHAR(10),
+								@TenSP NVARCHAR(150),
+								@MoTa NVARCHAR(150),
+								@GiaSP float,
+								@SoLuong int)
+as
+	begin
+		if @MaSP is not null
+			if @MaSP not in (select MaSP from PRODUCT)
+					insert into CUSTOMER values (@MaSP, @TenSP, @MoTa, @GiaSP, @SoLuong)
+	end
+--xoá bản ghi khách hàng theo mã khách hàng
+create proc deleteCustomer (@MaKH CHAR(10))
+as
+	begin
+		if @MaKH is not null
+			if @MaKH in (select MaKH from CUSTOMER)
+					delete from CUSTOMER where MaKH = @MaKH
+	end
+--xoá bản ghi khách hàng theo mã khách hàng
+create proc deleteProduct (@MaSP CHAR(10))
+as
+	begin
+		if @MaSP is not null
+			if @MaSP in (select MaSP from PRODUCT)
+					delete from PRODUCT where MaSP = @MaSP
+	end
+
